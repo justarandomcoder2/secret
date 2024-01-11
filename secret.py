@@ -28,8 +28,6 @@ def print_validation_result(code, is_good):
         print(f"Validation result for code {code}: NOT GOOD")
     reset_color()
 
-
-    
 def generate_random_code(format_choice):
     code = ""
 
@@ -52,9 +50,9 @@ def generate_random_code(format_choice):
         code += '-'
         code += ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
     elif format_choice == 3:
-        code += ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(4))
+        code += ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
         code += '-'
-        code += ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(6))
+        code += ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
         code += '-'
         code += ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(5))
     else:
@@ -80,6 +78,8 @@ def is_good_code(code, format_choice):
 
     if is_good and format_choice == 2:
         save_to_file('amazon_gift_card.txt', code)
+    elif is_good and format_choice == 3:
+        save_to_file('steam_keys.txt', code)
 
     return is_good
 
@@ -105,10 +105,4 @@ while True:
         print("Exiting program. Goodbye!")
         break
 
-    format_choice = int(input("Enter the format choice (1 for amazon vouchers xxxx-xxxxxx-xxxxxxxx, 2 for amazon gift card xxxx-xxxxxx-xxxxx, 3 for xxxxx-xxxxx-xxxxx-xxxxx-xxxxx): "))
-
-    for i in range(num_codes_to_generate):
-        random_code = generate_random_code(format_choice)
-        save_to_file('generated_codes.txt', random_code)
-        is_good = is_good_code(random_code, format_choice)
-        print(f"Generated code: {random_code} - {'Good' if is_good else 'Not Good'}")
+    format_choice = int(input
