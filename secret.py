@@ -9,9 +9,6 @@ init(autoreset=True)
 # Function to set text color
 def set_color(color):
     print(f"{color}", end="")
-    
-def set_color(color):
-    print(f"{color}", end="")
 
 # Function to reset text color
 def reset_color():
@@ -66,7 +63,7 @@ def generate_random_code(format_choice):
     return code
 
 def save_to_file(filename, content):
-    with open(filename, 'w') as file:
+    with open(filename, 'a') as file:  # Use 'a' (append) mode to add codes to the file
         file.write(content + '\n')
 
 def is_good_code(code, format_choice):
@@ -76,10 +73,8 @@ def is_good_code(code, format_choice):
     # Introduce a 10% chance of a code being "good" if unique percentage is 95% or above
     is_good = random.random() < 0.1 or unique_percentage >= 0.95
 
-    if is_good and format_choice == 2:
-        save_to_file('amazon_gift_card.txt', code)
-    elif is_good and format_choice == 3:
-        save_to_file('steam_keys.txt', code)
+    if is_good:
+        save_to_file('good_codes.txt', code)
 
     return is_good
 
@@ -105,4 +100,12 @@ while True:
         print("Exiting program. Goodbye!")
         break
 
-    format_choice = int(input
+    format_choice_str = input("Enter the format choice (1 for amazon vouchers, 2 for amazon gift cards, 3 for steam keys): ")
+    format_choice = int(format_choice_str) if format_choice_str.isdigit() else 0
+
+    for i in range(num_codes_to_generate):
+        random_code = generate_random_code(format_choice)
+        save_to_file('generated_codes.txt', random_code)
+        is_good = is_good_code(random_code, format_choice)
+        print(f"Generated code: {random_code} - {'Good' if is_good else 'Not Good'}")
+
